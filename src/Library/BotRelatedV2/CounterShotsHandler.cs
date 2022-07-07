@@ -12,7 +12,7 @@ namespace Library
         public CounterShotsHandler(BaseHandler next) : base(next)
         {
             this.Keywords = new string[] { "Disparos", "disparos" };
-            this.State = CounterShotsState.Start;
+            this.State = CounterShotsState.ShowShots;
         }
         protected override bool CanHandle(Message message)
         {
@@ -22,7 +22,7 @@ namespace Library
         protected override void InternalHandle(Message message, out string response)
         {
             response = string.Empty;
-            if (State == CounterShotsState.Start)
+            if (State == CounterShotsState.ShowShots)
             {
 
                 Game game = Administrator.Instance.GetPlayerGame(message.From.Id);
@@ -40,12 +40,11 @@ namespace Library
                     Bot.sendTelegramMessage(game.player2, $"Los disparos que tocaron agua fueron: {game.watherShots}\n Los disparos que tocaron barco fueron: {resutlTotalSipShots} \n Los disparos totales fueron {result}");
                 }
 
-                Administrator.Instance.SetUserState(message.From.Id, RegisterState.Start);
             }
         }
         public enum CounterShotsState
         {
-            Start,
+            ShowShots,
         }
 
     }
