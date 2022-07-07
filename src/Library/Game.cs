@@ -180,7 +180,7 @@ namespace Library
                 {
                     Console.WriteLine("Agua");
                     result = "Agua";
-                    watherShots = +1;
+                    watherShots = watherShots + 1;
                 }
                 attackerBoard.shots.Add(coord1.ToUpper());
                 attackerBoard.shots.Add(coord2);

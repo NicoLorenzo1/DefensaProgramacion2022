@@ -17,25 +17,8 @@ namespace Library
         protected override bool CanHandle(Message message)
         {
             return base.CanHandle(message);
-
-            /*
-            if (this.State == .Start)
-            {
-                return base.CanHandle(message);
-            }
-            else
-            {
-                return true;
-            }
-            */
         }
 
-        /// <summary>
-        /// Procesa el mensaje "hola" y retorna true; retorna false en caso contrario.
-        /// </summary>
-        /// <param name="message">El mensaje a procesar.</param>
-        /// <param name="response">La respuesta al mensaje procesado.</param>
-        /// <returns>true si el mensaje fue procesado; false en caso contrario.</returns>
         protected override void InternalHandle(Message message, out string response)
         {
             response = string.Empty;
@@ -43,15 +26,18 @@ namespace Library
             {
 
                 Game game = Administrator.Instance.GetPlayerGame(message.From.Id);
-                int result = game.watherShots + game.shipShots;
+
+                int resutlTotalSipShots = game.hitsPlayer1 + game.hitsPlayer2;
+
+                int result = game.watherShots + resutlTotalSipShots;
 
                 if (game.player1.Id == message.From.Id)
                 {
-                    Bot.sendTelegramMessage(game.player1, $"Los disparos que tocaron agua fueron: {game.watherShots}\n Los disparos que tocaron barco fueron: {game.shipShots} \n Los disparos totales fueron {result}");
+                    Bot.sendTelegramMessage(game.player1, $"Los disparos que tocaron agua fueron: {game.watherShots}\n Los disparos que tocaron barco fueron: {resutlTotalSipShots} \n Los disparos totales fueron {result}");
                 }
                 else
                 {
-                    Bot.sendTelegramMessage(game.player2, $"Los disparos que tocaron agua fueron: {game.watherShots}\n Los disparos que tocaron barco fueron: {game.shipShots} \n Los disparos totales fueron {result}");
+                    Bot.sendTelegramMessage(game.player2, $"Los disparos que tocaron agua fueron: {game.watherShots}\n Los disparos que tocaron barco fueron: {resutlTotalSipShots} \n Los disparos totales fueron {result}");
                 }
 
                 Administrator.Instance.SetUserState(message.From.Id, RegisterState.Start);
